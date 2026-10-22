@@ -1,11 +1,11 @@
 
-This directory is intended for PlatformIO Test Runner and project tests.
-
-Unit Testing is a software testing method by which individual units of
-source code, sets of one or more MCU program modules together with associated
-control data, usage procedures, and operating procedures, are tested to
-determine whether they are fit for use. Unit testing finds problems early
-in the development cycle.
+Berikut adalah daftar library yang wajib diinstal pada Arduino IDE / PlatformIO untuk menjalankan
+kode sumber sistem pemantauan kesehatan wearable ini:
+• WiFi.h (Library bawaan ESP32 Core untuk koneksi jaringan nirkabel)
+• BlynkSimpleEsp32.h (Library resmi Blynk IoT versi 1.3.2+ untuk komunikasi cloud ESP32)
+• Wire.h (Library standar Arduino untuk komunikasi protokol I2C)
+• MPU6050.h oleh ElectronicCats (Library sensor accelerometer &amp; gyroscope MPU6050)
 
 More information about PlatformIO Unit Testing:
 - https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+

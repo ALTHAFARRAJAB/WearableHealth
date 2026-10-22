@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID   "TMPLGM5k3SqQC"
+#define BLYNK_TEMPLATE_ID   "TMPL6M5k3SqQC"
 #define BLYNK_TEMPLATE_NAME "Wearable Health"
-#define BLYNK_AUTH_TOKEN    "6trC2VcRRP__ddlTp3zKygQQlX_1dou_"
+#define BLYNK_AUTH_TOKEN    "6trCzVcRRP__ddlTp3zKygQQlX_1dou_"
 #define Blynk_PRINT Serial
 
 #include <Arduino.h>
@@ -60,6 +60,10 @@ void setup() {
   pinMode(pinLedRed, OUTPUT);
   pinMode(pinLedGreen, OUTPUT);
   pinMode(pinBuzzer, OUTPUT);
+
+  // --- INISIALISASI LEDC VERSI 2.X (Buzzer PWM) ---
+  ledcSetup(0, 2000, 8);         // Channel 0, Frekuensi 2000Hz, Resolusi 8-bit
+  ledcAttachPin(pinBuzzer, 0);   // Hubungkan pinBuzzer ke Channel 0
 
   mpu.initialize();
   if (!mpu.testConnection()) {
@@ -160,10 +164,10 @@ void driveActuators(unsigned long currentMillis) {
   if (currentState == MONITOR || currentState == RECOVERY) {
     digitalWrite(pinLedGreen, HIGH);
     digitalWrite(pinLedRed, LOW);
-    noTone(pinBuzzer);
+    ledcWrite(0, 0); // Matikan buzzer
   } else if (currentState == ALERT) {
     digitalWrite(pinLedGreen, LOW);
-    noTone(pinBuzzer);
+    ledcWrite(0, 0);
     
     if (currentMillis - previousBlinkMillis >= 500) {
       previousBlinkMillis = currentMillis;
@@ -179,9 +183,9 @@ void driveActuators(unsigned long currentMillis) {
       digitalWrite(pinLedRed, ledState);
       
       if (ledState) {
-        tone(pinBuzzer, 2000);
+        ledcWrite(0, 128); // Nyalakan buzzer (bunyi)
       } else {
-        noTone(pinBuzzer);
+        ledcWrite(0, 0);   // Matikan buzzer
       }
     }
   }
